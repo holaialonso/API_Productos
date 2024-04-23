@@ -29,9 +29,6 @@ public class Talla implements Serializable {
     @Column(name= SchemaDB.COL_NOMBRE)
     private String nombre;
 
-    @ManyToMany(mappedBy = "tallas")
-    private List<Producto> productos = new ArrayList<>();
-
 
     //Constructor
     public Talla(String nombre){

@@ -40,14 +40,15 @@ CREATE TABLE colores_productos(
     FOREIGN KEY (ref_id_producto) REFERENCES productos(id)
 )
 
-CREATE TABLE Tallas_Productos(
-    RefIdTalla int(11),
-    RefIdProducto int(11),
-    Ancho float,
-    Alto float,
-    PRIMARY KEY (RefIdTalla, RefIdProducto),
-    FOREIGN KEY (RefIdTalla) REFERENCES Tallas(IdTalla),
-    FOREIGN KEY (RefIdProducto) REFERENCES Productos(IdProducto)
+CREATE TABLE tallas_productos(
+    id int(11) AUTO_INCREMENT NOT NULL,
+    ref_id_talla int(11),
+    ref_id_producto int(11),
+    ancho float,
+    alto float,
+    PRIMARY KEY (id),
+    FOREIGN KEY (ref_id_talla) REFERENCES tallas(id),
+    FOREIGN KEY (ref_id_producto) REFERENCES productos(id)
 )
 
 

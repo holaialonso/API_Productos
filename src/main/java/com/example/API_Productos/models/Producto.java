@@ -47,11 +47,11 @@ public class Producto implements Serializable {
     @Column(name=SchemaDB.COL_DESCATALOGADO)
     private int descatalogado;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name=SchemaDB.COL_REFIDCATEGORIA)
     private Categoria categoria;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = SchemaDB.TAB_COLORESPRODUCTOS,
             joinColumns = @JoinColumn(name = SchemaDB.COL_REFIDPRODUCTO),
@@ -59,13 +59,13 @@ public class Producto implements Serializable {
     )
     private List<Color> colores = new ArrayList<>();
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = SchemaDB.TAB_TALLASPRODUCTOS,
             joinColumns = @JoinColumn(name = SchemaDB.COL_REFIDPRODUCTO),
             inverseJoinColumns = @JoinColumn(name = SchemaDB.COL_REFIDTALLA)
     )
-    private List<Talla> tallas = new ArrayList<>();
+    private List<TallaProducto> tallas = new ArrayList<>();
 
 
     //Constructores
@@ -81,7 +81,9 @@ public class Producto implements Serializable {
 
     }
 
-
-
+    //Setters
+    public void setColores(List<Color> colores) {
+        this.colores = colores;
+    }
 }
 

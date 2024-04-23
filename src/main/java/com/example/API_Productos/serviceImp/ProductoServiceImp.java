@@ -1,8 +1,6 @@
 package com.example.API_Productos.serviceImp;
 
-import com.example.API_Productos.models.Color;
 import com.example.API_Productos.models.Producto;
-import com.example.API_Productos.models.Talla;
 import com.example.API_Productos.repository.ColorRepository;
 import com.example.API_Productos.repository.ProductoRepository;
 import com.example.API_Productos.repository.TallaRepository;
@@ -56,25 +54,5 @@ public class ProductoServiceImp implements ProductoService {
     }
 
 
-    @Override
-    public void saveColorProducto(Producto producto, Color color){
-
-        producto.getColores().add(color);
-        color.getProductos().add(producto);
-
-        productoRepository.save(producto);
-        colorRepository.save(color);
-    }
-
-    @Override
-    public void saveTallaProducto(Producto producto, Talla talla) {
-
-        producto.getTallas().add(talla);
-        talla.getProductos().add(producto);
-
-        productoRepository.save(producto);
-        tallaRepository.save(talla);
-
-    }
 
 }

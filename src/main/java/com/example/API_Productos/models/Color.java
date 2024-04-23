@@ -34,14 +34,14 @@ public class Color {
     @Column(name=SchemaDB.COL_HEXADECIMAL)
     private String hexadecimal;
 
-    @ManyToMany(mappedBy = "colores")
-    private List<Producto> productos = new ArrayList<>();
+
 
     //Constructor
     public Color (String color){
 
         this.codColor=makeCodColor(color);
         this.nombre=color;
+        this.hexadecimal="#ffffff";
     }
 
     public Color(int id, String codColor, String color){
