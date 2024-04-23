@@ -2,6 +2,7 @@ package com.example.API_Productos.service;
 
 import com.example.API_Productos.models.Producto;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public interface ProductoService {
@@ -14,5 +15,5 @@ public interface ProductoService {
 
     Optional<Producto> getProducto (long id);
 
-
+    ArrayList<Producto> getAllProductos();
 }

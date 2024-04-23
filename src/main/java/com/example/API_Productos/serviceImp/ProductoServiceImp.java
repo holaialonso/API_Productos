@@ -8,6 +8,8 @@ import com.example.API_Productos.service.ProductoService;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -59,6 +61,20 @@ public class ProductoServiceImp implements ProductoService {
         return productoRepository.findById(id);
     }
 
+    @Override
+    public ArrayList<Producto> getAllProductos() {
+
+        Iterable<Producto> aux = productoRepository.findAll();
+        Iterator<Producto> iterator = aux.iterator();
+
+        ArrayList<Producto> productos = new ArrayList<>();
+
+        while (iterator.hasNext()) {
+           productos.add(iterator.next());
+        }
+
+        return productos;
+    }
 
 
 }

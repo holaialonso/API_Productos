@@ -1,6 +1,10 @@
 package com.example.API_Productos.models;
 
 import com.example.API_Productos.database.SchemaDB;
+import com.example.API_Productos.dto.ColorDTO;
+import com.example.API_Productos.dto.ProductoDTO;
+import com.example.API_Productos.dto.TallaProductoDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +15,11 @@ import javax.xml.validation.Schema;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @NoArgsConstructor
@@ -76,9 +84,59 @@ public class Producto implements Serializable {
 
     }
 
-    //Setters
-    public void setColores(List<Color> colores) {
-        this.colores = colores;
+
+    //Método para mostrar el producto con unos valores determinados
+    public ProductoDTO toDataTransferObject()  {
+
+        ProductoDTO producto = new ProductoDTO(
+                                                this.id,
+                                                this.nombre,
+                                                this.categoria.getNombre(),
+                                                this.marca,
+                                                this.gramaje,
+                                                this.cantCaja,
+                                                this.composicion,
+                                                (this.descatalogado==1) ? false : true,
+                                                toDataTransferObject_Colors(),
+                                                toDataTransferObject_Sizes()
+                                                );
+
+        return producto;
     }
+
+        //Método para formatear a json los colores del producto
+        private List<ColorDTO> toDataTransferObject_Colors() {
+
+            List<ColorDTO> aux = new ArrayList();
+
+            for(int i=0; i<this.colores.size(); i++){
+
+                Color color = this.colores.get(i);
+                aux.add(new ColorDTO(color.getCodColor(), color.getNombre(), color.getHexadecimal()));
+
+            }
+
+            return aux;
+
+        }
+
+
+        //Método para formatear a json las tallas del producto
+        private List<TallaProductoDTO> toDataTransferObject_Sizes() {
+
+            List<TallaProductoDTO> aux = new ArrayList();
+
+            for(int i=0; i<this.tallas.size(); i++){
+
+                TallaProducto talla = this.tallas.get(i);
+                aux.add(new TallaProductoDTO(talla.getTalla().getNombre(), talla.getAlto(), talla.getAncho()));
+            }
+
+            return aux;
+        }
+
+
+
+
 }
 

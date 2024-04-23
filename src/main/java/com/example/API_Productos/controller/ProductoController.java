@@ -1,9 +1,11 @@
 package com.example.API_Productos.controller;
 
+import com.example.API_Productos.dto.ProductoDTO;
 import com.example.API_Productos.json_structure.ProductoColores;
 import com.example.API_Productos.json_structure.ProductoTallas;
 import com.example.API_Productos.models.*;
 import com.example.API_Productos.service.ProductoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +30,15 @@ public class ProductoController {
     @Autowired
     TallaController tallaController;
 
+    //CREATE
     //Método para añadir un producto nuevo
     @GetMapping("/product/add")
-    public ResponseEntity<Producto> addProducto(@RequestParam (value="name") String nombre,
-                                                @RequestParam (value="brand") String marca,
-                                                @RequestParam (value="weight") int gramaje,
-                                                @RequestParam (value="quantityBox") int cantCaja,
-                                                @RequestParam (value="composition") String composicion,
-                                                @RequestParam (value="category") String categoria
+    public ResponseEntity<ProductoDTO> addProducto(@RequestParam (value="name") String nombre,
+                                                   @RequestParam (value="brand") String marca,
+                                                   @RequestParam (value="weight") int gramaje,
+                                                   @RequestParam (value="quantityBox") int cantCaja,
+                                                   @RequestParam (value="composition") String composicion,
+                                                   @RequestParam (value="category") String categoria
                                                 ){
         //Categoria
         Categoria auxCategoria = categoriaController.addCategoria(new Categoria (categoria));
@@ -44,7 +47,7 @@ public class ProductoController {
         Producto producto = new Producto(nombre, marca, gramaje, cantCaja, composicion, 1, auxCategoria);
         producto=productoService.addProducto(producto);
 
-        return new ResponseEntity<>(producto, HttpStatus.OK);
+        return new ResponseEntity(producto.toDataTransferObject(), HttpStatus.OK);
 
     }
 
@@ -163,7 +166,38 @@ public class ProductoController {
         }
 
 
+    //READ - SELECT
+    @GetMapping("/product/get")
+    public ResponseEntity readProducto(@RequestParam (value="id") int id) {
+
+        //Compruebo si tengo el producto
+        if(productoService.getProducto(id).isPresent()){
+
+            Producto producto = productoService.getProducto(id).get();
+            return new ResponseEntity(producto.toDataTransferObject(), HttpStatus.OK);
+        }
+        else{
+
+            return new ResponseEntity("El producto no existe.", HttpStatus.OK);
+        }
+
+    }
 
 
+    @GetMapping("/product/getAll")
+    public ResponseEntity readAllProductos()  {
+
+       //productoService.find
+        ArrayList<Producto> productos = productoService.getAllProductos();
+        ArrayList<ProductoDTO> response = new ArrayList<>();
+
+        for(int i=0; i<productos.size(); i++){
+
+            response.add(productos.get(i).toDataTransferObject());
+        }
+
+        return new ResponseEntity(response, HttpStatus.OK);
+
+    }
 
 }
