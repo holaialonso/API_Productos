@@ -1,20 +1,17 @@
 package com.example.API_Productos.controller;
 
+import com.example.API_Productos.json_structure.ProductoColores;
+import com.example.API_Productos.json_structure.ProductoTallas;
 import com.example.API_Productos.models.*;
 import com.example.API_Productos.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RestController
 public class ProductoController {
@@ -53,61 +50,117 @@ public class ProductoController {
 
 
     //Método para añadir colores al producto
-    @GetMapping("/product/addColors")
-    public ResponseEntity<String> addProductColors(@RequestParam (value="id") int id,
-                                                   @RequestParam (value="colors") String[] colores
+    @PostMapping("/product/addColors")
+    public ResponseEntity<String> addProductColors(@RequestBody ProductoColores params
+
     ){
+        int id = params.getId();
+        Map<String, String> colores = params.getColors();
         String aux="";
 
         //En caso de que el producto exista -> introduzco los colores
         if(productoService.getProducto(id).isPresent()){
 
             Producto producto = productoService.getProducto(id).get();
-            producto.setColores(makeColores(colores));
-            productoService.addProducto(producto);
+            List<Color> auxColores = makeColores(colores);
+            producto.setColores(auxColores);
+            productoService.updateProducto(producto);
 
             aux="Los colores se han añadido correctamente al producto";
+
 
         }
         else{
 
             aux="El producto no existe, no se pueden añadir colores";
+
         }
 
-        return new ResponseEntity<>(aux, HttpStatus.OK);
+        return new ResponseEntity<String>(aux, HttpStatus.OK);
 
     }
 
 
         //Método para montar el arrayList de colores y guardar los colores del producto
-        private List<Color> makeColores(String[] colores){
+        private List<Color> makeColores(Map<String, String> colores){
 
             List<Color> aux = new ArrayList<>();
 
-            for(int i=0; i<colores.length; i++){
+            // Iterar sobre el mapa de colores
+            for (Map.Entry<String, String> entry : colores.entrySet()) {
 
-                Color color = colorController.addColor(new Color(colores[i])); //guardo el color
-                aux.add(new Color(color.getId(), color.getCodColor(), color.getNombre())); //lo añado al array de colores del producto
+                String nombreColor = entry.getKey();
+                String hexadecimal = entry.getValue();
+
+                Color color = colorController.addColor(new Color(nombreColor, hexadecimal)); //guardo el color
+                aux.add(color); //lo añado al array de colores del product
             }
 
             return aux;
         }
 
 
+    //Método para añadir tallas del producto
+    @PostMapping("/product/addSizes")
+    public ResponseEntity <String> addProductSizes(@RequestBody ProductoTallas params
+
+    ){
+        int id = params.getId();
+        Map<String, String> tallas = params.getSizes();
+        String aux="";
+
+        //En caso de que el producto exista -> introduzco los colores
+        if(productoService.getProducto(id).isPresent()){
+
+            Producto producto = productoService.getProducto(id).get();
+            List<TallaProducto> auxTallas = makeTallas(producto, tallas);
+            producto.setTallas(auxTallas);
+            productoService.updateProducto(producto);
+
+            aux="Las tallas se han añadido correctamente al producto.";
+
+
+        }
+        else{
+
+            aux="El producto no existe, no se pueden añadir tallas.";
+
+        }
+
+        return new ResponseEntity<String>(aux, HttpStatus.OK);
+
+
+    }
+
         //Método para montar el arrayList de las tallas y guardar las tallas del producto
-       /* private List<TallaProducto> makeTallas(String[] tallas){
+        private List<TallaProducto> makeTallas(Producto producto, Map<String, String> tallas){
 
             List<TallaProducto> aux = new ArrayList<>();
 
-            for(int i=0; i<tallas.length; i++){
+            for (Map.Entry<String, String> entry : tallas.entrySet()) {
 
-                Talla talla = tallaController.addTalla(new Talla(tallas[i]));
-                aux.add(new TallaProducto(talla, 0, 0));
+                double ancho = 0;
+                double alto=0;
+
+                String nombreTalla = entry.getKey();
+
+                //Calcular la medida
+                String medida = entry.getValue().toLowerCase();
+                String[] medidas = medida.split("x");
+
+                if(medidas.length==2){
+                    ancho = Double.parseDouble(medidas[0]);
+                    alto = Double.parseDouble(medidas[1]);
+                }
+
+
+                Talla talla = tallaController.addTalla(new Talla(nombreTalla));
+                aux.add(new TallaProducto(producto, talla, ancho, alto));
             }
 
             return aux;
 
-        }*/
+        }
 
 
 

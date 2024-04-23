@@ -37,19 +37,13 @@ public class Color {
 
 
     //Constructor
-    public Color (String color){
+    public Color (String color, String hexadecimal){
 
         this.codColor=makeCodColor(color);
         this.nombre=color;
-        this.hexadecimal="#ffffff";
+        this.hexadecimal=hexadecimal;
     }
 
-    public Color(int id, String codColor, String color){
-
-        this.id=id;
-        this.codColor=codColor;
-        this.nombre=color;
-    }
 
 
     //Método para construir el código del color

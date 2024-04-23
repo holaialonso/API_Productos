@@ -36,6 +36,12 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
+    public Producto updateProducto(Producto producto) {
+
+        return productoRepository.save(producto);
+    }
+
+    @Override
     public Boolean issetProducto(long id) {
 
         if(productoRepository.existsById(id)){

@@ -8,6 +8,8 @@ public interface ProductoService {
 
     Producto addProducto (Producto producto);
 
+    Producto updateProducto(Producto producto);
+
     Boolean issetProducto(long id);
 
     Optional<Producto> getProducto (long id);

@@ -51,7 +51,7 @@ public class Producto implements Serializable {
     @JoinColumn(name=SchemaDB.COL_REFIDCATEGORIA)
     private Categoria categoria;
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = SchemaDB.TAB_COLORESPRODUCTOS,
             joinColumns = @JoinColumn(name = SchemaDB.COL_REFIDPRODUCTO),
@@ -59,12 +59,7 @@ public class Producto implements Serializable {
     )
     private List<Color> colores = new ArrayList<>();
 
-    @OneToMany
-    @JoinTable(
-            name = SchemaDB.TAB_TALLASPRODUCTOS,
-            joinColumns = @JoinColumn(name = SchemaDB.COL_REFIDPRODUCTO),
-            inverseJoinColumns = @JoinColumn(name = SchemaDB.COL_REFIDTALLA)
-    )
+    @ManyToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<TallaProducto> tallas = new ArrayList<>();
 
 

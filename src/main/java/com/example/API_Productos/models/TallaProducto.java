@@ -23,10 +23,28 @@ public class TallaProducto implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = SchemaDB.COL_REFIDPRODUCTO)
+    private Producto producto;
+
+    @ManyToOne
+    @JoinColumn(name = SchemaDB.COL_REFIDTALLA)
+    private Talla talla;
+
     @Column(name = SchemaDB.COL_ALTO)
     private double ancho;
 
     @Column(name = SchemaDB.COL_ANCHO)
     private double alto;
+
+
+    //Constructores
+    public TallaProducto(Producto producto, Talla talla, double ancho, double alto){
+
+        this.producto=producto;
+        this.talla=talla;
+        this.ancho=ancho;
+        this.alto=alto;
+    }
 }
 
