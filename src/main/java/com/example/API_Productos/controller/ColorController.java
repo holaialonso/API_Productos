@@ -13,9 +13,10 @@ public class ColorController {
     @Autowired
     ColorService colorService;
 
-    //Método para añadir un color
+    //Método para guardar un color
     public Color addColor(Color color){
 
         return colorService.addColor(color);
     }
+
 }

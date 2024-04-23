@@ -11,7 +11,7 @@ import javax.xml.validation.Schema;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -57,7 +57,7 @@ public class Producto implements Serializable {
             joinColumns = @JoinColumn(name = SchemaDB.COL_REFIDPRODUCTO),
             inverseJoinColumns = @JoinColumn(name = SchemaDB.COL_REFIDCOLOR)
     )
-    private ArrayList<Color> colores;
+    private List<Color> colores = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -65,7 +65,7 @@ public class Producto implements Serializable {
             joinColumns = @JoinColumn(name = SchemaDB.COL_REFIDPRODUCTO),
             inverseJoinColumns = @JoinColumn(name = SchemaDB.COL_REFIDTALLA)
     )
-    private ArrayList<Talla> tallas;
+    private List<Talla> tallas = new ArrayList<>();
 
 
     //Constructores
@@ -78,11 +78,10 @@ public class Producto implements Serializable {
         this.composicion=composicion;
         this.descatalogado=descatalogado;
         this.categoria=categoria;
+
     }
 
 
-    public void setColores(Array
-                           )
 
 }
 

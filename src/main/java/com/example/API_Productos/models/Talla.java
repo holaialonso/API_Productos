@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.xml.validation.Schema;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +29,12 @@ public class Talla implements Serializable {
     @Column(name= SchemaDB.COL_NOMBRE)
     private String nombre;
 
-   /* @ManyToMany(mappedBy = "tallas")
-    private ArrayList<Producto> productos;*/
+    @ManyToMany(mappedBy = "tallas")
+    private List<Producto> productos = new ArrayList<>();
+
+
+    //Constructor
+    public Talla(String nombre){
+        this.nombre=nombre;
+    }
 }

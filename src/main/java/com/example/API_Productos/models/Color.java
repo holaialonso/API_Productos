@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,13 +31,32 @@ public class Color {
     @Column(name=SchemaDB.COL_NOMBRE)
     private String nombre;
 
-   /* @ManyToMany(mappedBy = "colores")
-    private ArrayList<Producto> productos;*/
+    @Column(name=SchemaDB.COL_HEXADECIMAL)
+    private String hexadecimal;
+
+    @ManyToMany(mappedBy = "colores")
+    private List<Producto> productos = new ArrayList<>();
 
     //Constructor
     public Color (String color){
 
+        this.codColor=makeCodColor(color);
         this.nombre=color;
     }
 
+    public Color(int id, String codColor, String color){
+
+        this.id=id;
+        this.codColor=codColor;
+        this.nombre=color;
+    }
+
+
+    //Método para construir el código del color
+    private String makeCodColor(String nombre){
+
+        String codColor = "C00"+nombre.toUpperCase().charAt(0);
+
+        return codColor;
+    }
 }

@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ColorRepository extends CrudRepository<Color, Long> {
 
-    boolean existsByNombre(String nombre);
+    Boolean existsByNombre(String nombre);
 
     Color findByNombre(String nombre);
 }

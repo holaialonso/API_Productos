@@ -31,5 +31,7 @@ public interface SchemaDB {
     String COL_ANCHO="ancho";
     String COL_ALTO="alto";
 
+    String COL_HEXADECIMAL="hexadecimal";
+
 
 }
