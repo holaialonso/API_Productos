@@ -1,0 +1,53 @@
+BBDD: API_Productos
+
+CREATE TABLE categorias(
+    id int(11) AUTO_INCREMENT NOT NULL,
+    nombre varchar(100),
+    PRIMARY KEY (id)
+)
+
+CREATE TABLE productos(
+    id int(11) AUTO_INCREMENT NOT NULL,
+    nombre varchar(250),
+    marca varchar(100),
+    cant_caja int(4),
+    composicion varchar(100),
+    activo tinyint(1),
+    ref_id_categoria int(11),
+    PRIMARY KEY (id),
+    FOREIGN KEY (ref_id_categoria) REFERENCES categorias(id)
+)
+
+CREATE TABLE colores(
+    id int(11) AUTO_INCREMENT NOT NULL,
+    cod_color varchar(10),
+    nombre varchar(100),
+    PRIMARY KEY (id)
+)
+
+CREATE TABLE tallas(
+    id int(11) AUTO_INCREMENT NOT NULL,
+    nombre varchar(10),
+    PRIMARY KEY (id)
+)
+
+CREATE TABLE colores_productos(
+    ref_id_color int(11),
+    ref_id_producto int(11),
+    activo tinyint(1),
+    PRIMARY KEY (ref_id_color, ref_id_producto),
+    FOREIGN KEY (ref_id_color) REFERENCES colores(id),
+    FOREIGN KEY (ref_id_producto) REFERENCES productos(id)
+)
+
+CREATE TABLE Tallas_Productos(
+    RefIdTalla int(11),
+    RefIdProducto int(11),
+    Ancho float,
+    Alto float,
+    PRIMARY KEY (RefIdTalla, RefIdProducto),
+    FOREIGN KEY (RefIdTalla) REFERENCES Tallas(IdTalla),
+    FOREIGN KEY (RefIdProducto) REFERENCES Productos(IdProducto)
+)
+
+
