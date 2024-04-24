@@ -2,6 +2,7 @@ package com.example.API_Productos.models;
 
 
 import com.example.API_Productos.database.SchemaDB;
+import com.example.API_Productos.dto.ColorDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,11 +40,19 @@ public class Color {
     //Constructor
     public Color (String color, String hexadecimal){
 
+        color = color.toLowerCase();
+
         this.codColor=makeCodColor(color);
         this.nombre=color;
         this.hexadecimal=hexadecimal;
     }
 
+
+    //Setter
+    public void setCodColor(){
+
+        this.codColor=makeCodColor(this.nombre);
+    }
 
 
     //Método para construir el código del color
@@ -52,5 +61,18 @@ public class Color {
         String codColor = "C00"+nombre.toUpperCase().charAt(0);
 
         return codColor;
+    }
+
+
+    //Método para mostrar el color con unos valores determinados
+    public ColorDTO toDataTransferObject(){
+
+        ColorDTO color = new ColorDTO(
+                                        this.getCodColor(),
+                                        this.getNombre(),
+                                        this.getHexadecimal()
+                                        );
+
+        return color;
     }
 }
