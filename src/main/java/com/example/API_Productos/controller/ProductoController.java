@@ -172,7 +172,6 @@ public class ProductoController {
 
         //Compruebo si tengo el producto
         if(productoService.getProducto(id).isPresent()){
-
             Producto producto = productoService.getProducto(id).get();
             return new ResponseEntity(producto.toDataTransferObject(), HttpStatus.OK);
         }
@@ -198,6 +197,89 @@ public class ProductoController {
 
         return new ResponseEntity(response, HttpStatus.OK);
 
+    }
+
+    //UPDATE
+    //Método para actualizar el nombre del producto
+    @GetMapping("/product/updateName")
+    public ResponseEntity updateProductName(@RequestParam (value="id") int id,
+                                            @RequestParam (value="name") String nombre){
+
+        //Compruebo si tengo el producto
+        if(productoService.getProducto(id).isPresent()){
+            Producto producto = productoService.getProducto(id).get();
+                     producto.setNombre(nombre);
+                     producto = productoService.updateProducto(producto);
+            return new ResponseEntity(producto.toDataTransferObject(), HttpStatus.OK);
+        }
+        else{
+
+            return new ResponseEntity("El producto no existe.", HttpStatus.OK);
+        }
+
+    }
+
+
+    //Método para actualizar la categoría del producto
+    @GetMapping("/product/updateCategory")
+    public ResponseEntity updateProductCategory(@RequestParam (value="id") int id,
+                                                @RequestParam (value="category") String categoria){
+
+        //Compruebo si tengo el producto
+        if(productoService.getProducto(id).isPresent()){
+
+            Categoria auxCategoria = categoriaController.addCategoria(new Categoria (categoria));
+
+            Producto producto = productoService.getProducto(id).get();
+                     producto.setCategoria(auxCategoria);
+                     producto = productoService.updateProducto(producto);
+            return new ResponseEntity(producto.toDataTransferObject(), HttpStatus.OK);
+        }
+        else{
+
+            return new ResponseEntity("El producto no existe.", HttpStatus.OK);
+        }
+
+    }
+
+
+    //Método para descatalogar / activar un producto
+    @GetMapping("/product/updateDiscontinued")
+    public ResponseEntity updateProductDiscontinued(@RequestParam (value="id") int id,
+                                                    @RequestParam (value="discontinued") Boolean discontinued){
+
+        //Compruebo si tengo el producto
+        if(productoService.getProducto(id).isPresent()){
+            Producto producto = productoService.getProducto(id).get();
+            producto.setDescatalogado((discontinued) ? 0 : 1);
+            producto = productoService.updateProducto(producto);
+            return new ResponseEntity(producto.toDataTransferObject(), HttpStatus.OK);
+        }
+        else{
+
+            return new ResponseEntity("El producto no existe.", HttpStatus.OK);
+        }
+
+    }
+
+
+    //DELETE
+    //Método para eliminar un producto
+    @GetMapping("/product/delete")
+    public ResponseEntity<String> deleteProducto(@RequestParam (value="id") int id){
+
+        String aux="";
+
+        //Compruebo si tengo el producto
+        if(productoService.getProducto(id).isPresent()){
+            productoService.deleteProducto(id);
+            aux="El producto se ha eliminado correctamente.";
+        }
+        else{
+            aux="El producto no existe.";
+        }
+
+        return new ResponseEntity(aux, HttpStatus.OK);
     }
 
 }

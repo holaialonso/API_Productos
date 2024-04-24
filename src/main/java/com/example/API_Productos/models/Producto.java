@@ -59,7 +59,7 @@ public class Producto implements Serializable {
     @JoinColumn(name=SchemaDB.COL_REFIDCATEGORIA)
     private Categoria categoria;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = SchemaDB.TAB_COLORESPRODUCTOS,
             joinColumns = @JoinColumn(name = SchemaDB.COL_REFIDPRODUCTO),
@@ -74,6 +74,19 @@ public class Producto implements Serializable {
     //Constructores
     public Producto(String nombre, String marca, int gramaje, int cantCaja, String composicion, int descatalogado, Categoria categoria){
 
+        this.nombre=nombre;
+        this.marca=marca;
+        this.gramaje=gramaje;
+        this.cantCaja=cantCaja;
+        this.composicion=composicion;
+        this.descatalogado=descatalogado;
+        this.categoria=categoria;
+
+    }
+
+    public Producto(int id, String nombre, String marca, int gramaje, int cantCaja, String composicion, int descatalogado, Categoria categoria){
+
+        this.id=id;
         this.nombre=nombre;
         this.marca=marca;
         this.gramaje=gramaje;

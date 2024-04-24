@@ -16,4 +16,6 @@ public interface ProductoService {
     Optional<Producto> getProducto (long id);
 
     ArrayList<Producto> getAllProductos();
+
+    void deleteProducto(long id);
 }

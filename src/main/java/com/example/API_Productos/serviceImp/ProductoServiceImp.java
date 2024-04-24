@@ -76,5 +76,10 @@ public class ProductoServiceImp implements ProductoService {
         return productos;
     }
 
+    @Override
+    public void deleteProducto(long id) {
+        productoRepository.deleteById(id);
+    }
+
 
 }
