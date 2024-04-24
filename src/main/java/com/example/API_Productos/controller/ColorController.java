@@ -32,7 +32,7 @@ public class ColorController {
     //Método para crear un color nuevo
     @GetMapping("/color/add")
     public ResponseEntity<ColorDTO> addColor(@RequestParam (value="name") String name,
-                                             @RequestParam (value="hexadecimal") String hexadecimal){
+                                             @RequestParam (value="hex") String hexadecimal){
 
         //Color
         Color color = new Color(name, hexadecimal);

@@ -37,8 +37,8 @@ CREATE TABLE colores_productos(
     ref_id_color int(11),
     ref_id_producto int(11),
     PRIMARY KEY (ref_id_color, ref_id_producto),
-    FOREIGN KEY (ref_id_color) REFERENCES colores(id),
-    FOREIGN KEY (ref_id_producto) REFERENCES productos(id)
+    FOREIGN KEY (ref_id_color) REFERENCES colores(id) ON DELETE CASCADE,
+    FOREIGN KEY (ref_id_producto) REFERENCES productos(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tallas_productos(
@@ -48,8 +48,8 @@ CREATE TABLE tallas_productos(
     ancho float,
     alto float,
     PRIMARY KEY (id),
-    FOREIGN KEY (ref_id_talla) REFERENCES tallas(id),
-    FOREIGN KEY (ref_id_producto) REFERENCES productos(id)
+    FOREIGN KEY (ref_id_talla) REFERENCES tallas(id) ON DELETE CASCADE,
+    FOREIGN KEY (ref_id_producto) REFERENCES productos(id) ON DELETE CASCADE
 )
 
 
