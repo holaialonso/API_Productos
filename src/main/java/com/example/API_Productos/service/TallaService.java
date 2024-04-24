@@ -1,6 +1,6 @@
 package com.example.API_Productos.service;
 
-import com.example.API_Productos.models.Color;
+
 import com.example.API_Productos.models.Talla;
 
 import java.util.ArrayList;
