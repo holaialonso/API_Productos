@@ -60,4 +60,9 @@ public class ColorServiceImp implements ColorService {
     public void deleteColor(long id) {
         colorRepository.deleteById(id);
     }
+
+    @Override
+    public Boolean issetColorName(String name) {
+        return colorRepository.existsByNombre(name);
+    }
 }

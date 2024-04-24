@@ -16,7 +16,7 @@ CREATE TABLE productos(
     activo tinyint(1),
     ref_id_categoria int(11),
     PRIMARY KEY (id),
-    FOREIGN KEY (ref_id_categoria) REFERENCES categorias(id)
+    FOREIGN KEY (ref_id_categoria) REFERENCES categorias(id) ON DELETE CASCADE
 );
 
 CREATE TABLE colores(

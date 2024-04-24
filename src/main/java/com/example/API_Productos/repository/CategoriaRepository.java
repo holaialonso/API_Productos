@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface CategoriaRepository extends CrudRepository<Categoria, Long> {
 
-   /* @Query("SELECT c.id FROM categorias c WHERE c.nombre = :name")
-    Integer findByNombre(@Param("name") String name);*/
-
     boolean existsByNombre(String nombre);
 
     Categoria findByNombre(String nombre);

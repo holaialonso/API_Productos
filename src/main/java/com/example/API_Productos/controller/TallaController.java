@@ -1,7 +1,6 @@
 package com.example.API_Productos.controller;
 
-import com.example.API_Productos.dto.ColorDTO;
-import com.example.API_Productos.models.Color;
+
 import com.example.API_Productos.models.Talla;
 import com.example.API_Productos.service.TallaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ public class TallaController {
     //READ
     //Método para leer una talla pasando el id
     @GetMapping("/size/get")
-    public ResponseEntity<ColorDTO> getTalla(@RequestParam (value="id") int id){
+    public ResponseEntity<Talla> getTalla(@RequestParam (value="id") int id){
 
         //Compruebo si tengo el producto
         if(tallaService.getTalla(id).isPresent()){
@@ -68,7 +67,7 @@ public class TallaController {
 
 
     //UPDATE
-    //Método para actualizar el nombre del color (al mismo tiempo actualiza el código del color)
+    //Método para actualizar el nombre de la talla
     @GetMapping("/size/updateName")
     public ResponseEntity updateTallaName(@RequestParam (value="id") int id,
                                           @RequestParam (value="name") String nombre){
@@ -94,7 +93,7 @@ public class TallaController {
     }
 
     //DELETE
-    //Método para eliminar un color
+    //Método para eliminar una talla
     @GetMapping("/size/delete")
     public ResponseEntity<String> deleteTalla(@RequestParam (value="id") int id){
 

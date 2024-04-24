@@ -41,7 +41,6 @@ public class Color {
     public Color (String color, String hexadecimal){
 
         color = color.toLowerCase();
-
         this.codColor=makeCodColor(color);
         this.nombre=color;
         this.hexadecimal=hexadecimal;

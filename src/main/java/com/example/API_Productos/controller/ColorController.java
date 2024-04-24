@@ -1,11 +1,7 @@
 package com.example.API_Productos.controller;
 
 import com.example.API_Productos.dto.ColorDTO;
-import com.example.API_Productos.dto.ProductoDTO;
-import com.example.API_Productos.models.Categoria;
 import com.example.API_Productos.models.Color;
-import com.example.API_Productos.models.Producto;
-import com.example.API_Productos.service.CategoriaService;
 import com.example.API_Productos.service.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,18 +79,28 @@ public class ColorController {
     public ResponseEntity updateColorName(@RequestParam (value="id") int id,
                                           @RequestParam (value="name") String nombre){
 
+
         //Compruebo si tengo el producto
         if(colorService.getColor(id).isPresent()){
             Color color = colorService.getColor(id).get();
-            color.setNombre(nombre);
-            color.setCodColor();
-            color = colorService.updateColor(color);
-            return new ResponseEntity(color.toDataTransferObject(), HttpStatus.OK);
+
+            if(colorService.issetColorName(nombre)){
+                return new ResponseEntity("No se puede actualizar, existe otro color con el mismo nombre.", HttpStatus.OK);
+            }
+            else{
+                color.setNombre(nombre.toLowerCase());
+                color.setCodColor();
+                color = colorService.updateColor(color);
+                return new ResponseEntity(color, HttpStatus.OK);
+            }
         }
         else{
 
-            return new ResponseEntity("El color no existe.", HttpStatus.OK);
+            return new ResponseEntity("El color no existe", HttpStatus.OK);
         }
+
+
+
 
     }
 

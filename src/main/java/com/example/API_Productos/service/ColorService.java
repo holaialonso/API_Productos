@@ -17,4 +17,6 @@ public interface ColorService {
     ArrayList<Color> getAllColores();
 
     void deleteColor(long id);
+
+    Boolean issetColorName(String name);
 }

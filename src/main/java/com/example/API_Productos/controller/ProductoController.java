@@ -5,7 +5,6 @@ import com.example.API_Productos.json_structure.ProductoColores;
 import com.example.API_Productos.json_structure.ProductoTallas;
 import com.example.API_Productos.models.*;
 import com.example.API_Productos.service.ProductoService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +40,7 @@ public class ProductoController {
                                                    @RequestParam (value="category") String categoria
                                                 ){
         //Categoria
-        Categoria auxCategoria = categoriaController.addCategoria(new Categoria (categoria));
+        Categoria auxCategoria = categoriaController.addCategoria(new Categoria (categoria.toLowerCase()));
 
         //Producto
         Producto producto = new Producto(nombre, marca, gramaje, cantCaja, composicion, 1, auxCategoria);
@@ -228,7 +227,7 @@ public class ProductoController {
         //Compruebo si tengo el producto
         if(productoService.getProducto(id).isPresent()){
 
-            Categoria auxCategoria = categoriaController.addCategoria(new Categoria (categoria));
+            Categoria auxCategoria = categoriaController.addCategoria(new Categoria (categoria.toLowerCase()));
 
             Producto producto = productoService.getProducto(id).get();
                      producto.setCategoria(auxCategoria);
